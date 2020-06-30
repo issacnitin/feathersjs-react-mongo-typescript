@@ -6,8 +6,12 @@ export class CustomerService extends Service {
     super(config || {});
   }
   
-  async get(id: Id, params?: Params): Promise<any> {}
-  async create(data: Partial<any> | Array<Partial<any>>, params?: Params): Promise<any> {}
+  async get(id: Id, params?: Params): Promise<any> {
+    console.log("get called")
+  }
+  async create(data: Partial<any> | Array<Partial<any>>, params?: Params): Promise<any> {
+    console.log("create callaaed")
+  }
   async update(id: NullableId, data: any, params?: Params): Promise<any> {}
   async remove(id: NullableId, params?: Params): Promise<any> {}
 }
