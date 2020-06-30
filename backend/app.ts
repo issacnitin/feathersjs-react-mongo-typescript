@@ -1,5 +1,4 @@
 import feathers from '@feathersjs/feathers';
-import '@feathersjs/transport-commons';
 import express from '@feathersjs/express';
 import * as Services from './services/index';
 
@@ -22,9 +21,3 @@ Services.register(app);
 app.listen(3030).on('listening', () =>
   console.log('Feathers server listening on localhost:3030')
 );
-
-// For good measure let's create a message
-// So our API doesn't look so empty
-app.service('messages').create({
-  text: 'Hello world from the server'
-});

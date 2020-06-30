@@ -3,7 +3,7 @@ import { Params, Id, NullableId } from '@feathersjs/feathers';
 
 export class CustomerService extends Service {
   constructor(config?: Partial<MongoDBServiceOptions>) {
-    super(config);
+    super(config || {});
   }
   
   async get(id: Id, params?: Params): Promise<any> {}
