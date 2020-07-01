@@ -17,24 +17,14 @@ export class CustomerService extends Service {
     }
   }
 
-  async create(data: Partial<Customer>, params?: Params): Promise<any> {
+  async create(data: Partial<Customer>, params: Params): Promise<any> {
     // Create needs auth, add later
-    super.create(params?.data);
+    super.create(params.data);
     return true;
   }
 
+  // Not letting PUT call
   async update(id: NullableId, data: Partial<Customer>): Promise<any> {
     return false;
   }
-
-  async patch(id: NullableId, data: Partial<Customer>, params?: Params): Promise<any> {
-    try {
-      await super.patch(id, data, params);
-      return true;
-    } catch (err) {
-      return err;
-    }
-  }
-
-  async remove(id: NullableId, params?: Params): Promise<any> {}
 }

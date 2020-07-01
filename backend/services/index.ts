@@ -2,9 +2,9 @@ import { CustomerService } from "./customers/customers.class";
 import express from "@feathersjs/express";
 import { MongoClient, MongoClientCommonOption, MongoClientOptions } from "mongodb";
 import { OrderService } from "./orders/orders.class";
-import { hooks } from "./customers/customers.hooks";
+import { customersHooks } from "./customers/customers.hooks";
 import { AnalyticsService } from "./analytics/analytics.class";
-import { analyticsHooks } from "./analytics/analytics.hooks";
+import { ordersHooks } from "./orders/orders.hooks";
 
 export function register(app: express.Application<any>) {
 
@@ -20,20 +20,19 @@ export function register(app: express.Application<any>) {
       app.use("/customers", new CustomerService({
         Model: client.db("torre").collection("customers")
       }));
-      client.db("torre").collection("customers").createIndex("email", {unique: true}, (err, res) => {
-        console.log(err);
-        console.log(res);
+      client.db("torre").collection("customers").createIndex("email", {unique: true}, (err) => {
+        console.error(err);
       });
-      hooks(app);
+      customersHooks(app);
 
       app.use("/orders", new OrderService({
         Model: client.db("torre").collection("orders")
       }));
+      ordersHooks(app);
 
       app.use('/analytics', new AnalyticsService({
         Model: client.db("torre").collection("analytics")
-      }));
-      analyticsHooks(app);
+      }, app));
     })
     .catch((error) => console.error(error));
 }

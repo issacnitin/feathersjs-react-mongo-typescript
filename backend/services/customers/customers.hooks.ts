@@ -2,7 +2,7 @@ import express from "@feathersjs/express";
 import { HookContext, Hook } from '@feathersjs/feathers';
 import { Customer } from "./customers.model";
 
-export function hooks(app: express.Application) {
+export function customersHooks(app: express.Application) {
     app.service('customers').hooks({
         before: {
             create: [
@@ -14,7 +14,6 @@ export function hooks(app: express.Application) {
             ],
             get: [
                 async (context: HookContext) => {
-                    console.log(context.id)
                     let query = {
                         query: {
                             customer: context.id,
