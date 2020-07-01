@@ -4,15 +4,13 @@ import { Customer } from "./customers.model";
 
 export class CustomerService extends Service {
   constructor(config?: Partial<MongoDBServiceOptions>) {
-    super(config || {});
+    super(config);
   }
   
-  async get(id: Id, params?: Params): Promise<any> {
+  async get(id: Id, params: Params): Promise<any> {
     try {
       let customer = await super.get(id);
-      if(!!params) {
-        customer.orders = params.data.orders;
-      }
+      customer.orders = params.data;
       return customer;
     } catch (err) {
       return err;

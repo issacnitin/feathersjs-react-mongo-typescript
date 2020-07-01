@@ -3,6 +3,8 @@ import express from "@feathersjs/express";
 import { MongoClient, MongoClientCommonOption, MongoClientOptions } from "mongodb";
 import { OrderService } from "./orders/orders.class";
 import { hooks } from "./customers/customers.hooks";
+import { AnalyticsService } from "./analytics/analytics.class";
+import { analyticsHooks } from "./analytics/analytics.hooks";
 
 export function register(app: express.Application<any>) {
 
@@ -27,6 +29,11 @@ export function register(app: express.Application<any>) {
       app.use("/orders", new OrderService({
         Model: client.db("torre").collection("orders")
       }));
+
+      app.use('/analytics', new AnalyticsService({
+        Model: client.db("torre").collection("analytics")
+      }));
+      analyticsHooks(app);
     })
     .catch((error) => console.error(error));
 }

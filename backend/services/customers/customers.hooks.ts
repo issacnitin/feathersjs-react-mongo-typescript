@@ -27,8 +27,8 @@ export function hooks(app: express.Application) {
                         return order._id;
                     })
 
-                    context.params.data = {
-                        orders: orders
+                    context.params = {
+                        data: orders
                     };
                 }
             ],
