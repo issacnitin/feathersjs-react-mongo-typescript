@@ -1,5 +1,3 @@
-import { MongoDBServiceOptions } from "feathers-mongodb/types";
-
 import * as M from 'mongodb';
 
 export class Order {

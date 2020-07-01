@@ -3,21 +3,23 @@ import express from "@feathersjs/express";
 import { MongoClient, MongoClientCommonOption, MongoClientOptions } from "mongodb";
 
 export function register(app: express.Application<any>) {
-  app.use("/customers", new CustomerService());
 
   let options : MongoClientOptions = {
     auth: {
       user: "issacnitinmongod",
-      password: "iPhoneMyPh0ne!!"
+      password: "iPhoneMyPh0ne"
     },
     useUnifiedTopology: true
   }
-  MongoClient.connect("mongodb://mongo:27017/", options)
-    .then(function (client) {
-      // Set the model now that we are connected
-      app.service("customers").Model = client
-        .db("torre")
-        .collection("customers");
+  MongoClient.connect("mongodb://127.0.0.1:27017/", options)
+    .then(async function (client) {
+      app.use("/customers", new CustomerService({
+        Model: client.db("torre").collection("customers")
+      }));
+      client.db("torre").collection("customers").createIndex("email", {unique: true}, (err, res) => {
+        console.log(err);
+        console.log(res);
+      });
     })
     .catch((error) => console.error(error));
 }
