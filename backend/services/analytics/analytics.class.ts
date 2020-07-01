@@ -18,15 +18,18 @@ export class AnalyticsService extends Service {
             $group: {
                 _id: { $dayOfMonth: "$timestamp" },
                 count: { $sum: 1},
-                price: "$price",
-                quantity: "$quantity"
+                sum: { 
+                  $sum: {
+                    $multiply: ["$price", "$quantity"]
+                  }
+                }
             } 
         },
         {
             $replaceWith: {
                 day: "$_id",
                 count: "$count",
-                sum: {$multiply: ["$price", "$quantity"]}
+                sum: "$sum"
             }
         }
     ];

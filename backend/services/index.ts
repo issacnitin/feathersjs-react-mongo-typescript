@@ -15,7 +15,7 @@ export function register(app: express.Application<any>) {
     },
     useUnifiedTopology: true
   }
-  MongoClient.connect("mongodb://127.0.0.1:27017/", options)
+  MongoClient.connect("mongodb://mongo:27017", options)
     .then(async function (client) {
       app.use("/customers", new CustomerService({
         Model: client.db("torre").collection("customers")
