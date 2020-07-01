@@ -1,43 +1,61 @@
 import React from 'react';
-import { getCustomers } from './Utilities';
-import { Customer } from "./Models/Customers";
-import { ListGroup } from "react-bootstrap";
+import Customers from "./Pages/Customers";
+import Orders from "./Pages/Orders";
+import Analytics from "./Pages/Analytics";
+import './App.css';
+
+enum Page{
+  CUSTOMERS,
+  ORDERS,
+  ANALYICS
+}
 
 interface IProps {
 
 }
 
 interface IState {
-  customers: Array<Customer>;
+  page: Page;
+  cxId: string;
 }
 
 export default class App extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      customers: []
+      page: Page.CUSTOMERS,
+      cxId: ""
     }
-    this.loadCustomers();
   }
 
-  loadCustomers = async () => {
-    let customers = await getCustomers();
+  setCustomer = (cx: string) => {
     this.setState({
-      customers: customers
+      page: Page.ORDERS,
+      cxId: cx
     });
   }
 
   render() {
+    let jsx : JSX.Element;
+    switch(this.state.page) {
+      case Page.CUSTOMERS:
+        jsx = <Customers setCustomer={this.setCustomer} />;
+        break;
+      case Page.ORDERS:
+        jsx = <Orders customerId={this.state.cxId}/>;
+        break;
+      case Page.ANALYICS:
+        jsx = <Analytics />;
+        break;
+      default:
+        jsx = <Customers setCustomer={this.setCustomer} />;
+        break;
+    }
     return (
       <div className="App">
-        <ListGroup>
-          <ListGroup.Item>Test</ListGroup.Item>
-          {
-            this.state.customers.map((cx) => (
-                <ListGroup.Item>{cx.firstName} {cx.lastName}</ListGroup.Item>
-            ))
-          }
-        </ListGroup>
+        <div className="AppInner">
+          {jsx}
+        </div>
       </div>
     );
   }
