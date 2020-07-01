@@ -1,6 +1,8 @@
 import { CustomerService } from "./customers/customers.class";
 import express from "@feathersjs/express";
 import { MongoClient, MongoClientCommonOption, MongoClientOptions } from "mongodb";
+import { OrderService } from "./orders/orders.class";
+import { hooks } from "./customers/customers.hooks";
 
 export function register(app: express.Application<any>) {
 
@@ -20,6 +22,11 @@ export function register(app: express.Application<any>) {
         console.log(err);
         console.log(res);
       });
+      hooks(app);
+
+      app.use("/orders", new OrderService({
+        Model: client.db("torre").collection("orders")
+      }));
     })
     .catch((error) => console.error(error));
 }

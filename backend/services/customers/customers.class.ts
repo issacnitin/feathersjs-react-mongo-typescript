@@ -8,7 +8,15 @@ export class CustomerService extends Service {
   }
   
   async get(id: Id, params?: Params): Promise<any> {
-    console.log("get called")
+    try {
+      let customer = await super.get(id);
+      if(!!params) {
+        customer.orders = params.data.orders;
+      }
+      return customer;
+    } catch (err) {
+      return err;
+    }
   }
 
   async create(data: Partial<Customer>, params?: Params): Promise<any> {
