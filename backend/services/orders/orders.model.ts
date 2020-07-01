@@ -1,15 +1,9 @@
-import * as M from 'mongodb';
+import {ObjectId} from 'mongodb';
 
 export class Order {
-    customer: M.ObjectID;
-    product: String;
-    quantity: Number;
-    price: Number
-
-    constructor() {
-        this.customer = new M.ObjectID();
-        this.product = "";
-        this.quantity = 0;
-        this.price = 0;
-    }
+    _id?: ObjectId;
+    customer?: ObjectId;
+    product?: String;
+    quantity?: Number;
+    price?: Number
 }

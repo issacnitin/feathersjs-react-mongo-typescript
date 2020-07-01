@@ -21,16 +21,17 @@ export class CustomerService extends Service {
 
   async create(data: Partial<Customer>, params?: Params): Promise<any> {
     // Create needs auth, add later
-    data.created = new Date();
-    super.create(data, params);
+    super.create(params?.data);
     return true;
   }
 
-  async update(id: NullableId, data: Partial<Customer>, params?: Params): Promise<any> {
-    if(!id) return false;
-    delete data.created;
+  async update(id: NullableId, data: Partial<Customer>): Promise<any> {
+    return false;
+  }
+
+  async patch(id: NullableId, data: Partial<Customer>, params?: Params): Promise<any> {
     try {
-      await super.update(id as Id, data, params);
+      await super.patch(id, data, params);
       return true;
     } catch (err) {
       return err;

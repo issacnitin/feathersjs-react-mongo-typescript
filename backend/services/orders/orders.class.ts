@@ -6,8 +6,7 @@ export class OrderService extends Service {
   constructor(config?: Partial<MongoDBServiceOptions>) {
     super(config);
   }
-  
-  async get(id: Id, params?: Params): Promise<any> {}
+
   
   async create(data: Partial<Order>, params?: Params): Promise<any> {
     try {
