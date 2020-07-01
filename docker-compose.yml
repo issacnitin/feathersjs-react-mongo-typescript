@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   backend:
     build:
@@ -6,6 +6,12 @@ services:
       dockerfile: ./backend/Dockerfile
     depends_on:
     - "mongo"
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    volumes:
+      - frontend-volume:/home/work
   mongo:
     image: mongo:latest
     environment:
@@ -23,7 +29,13 @@ services:
     container_name: dev_nginx
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - frontend-volume:/home/work
     ports:
       - 8000:80
     depends_on: 
     - "backend"
+    - "frontend"
+
+volumes:
+  frontend-volume:
+    external: false
