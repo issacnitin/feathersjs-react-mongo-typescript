@@ -37,6 +37,16 @@ export function customersHooks(app: express.Application) {
                     delete context.data.created;
                     context.data = cx;
                 }
+            ],
+            remove: [
+                async (context: HookContext) => {
+                    let param = {
+                        query: {
+                            customerId: context.id
+                        }
+                    };
+                    await app.service('orders').remove(null, param);
+                }
             ]
         }
     })

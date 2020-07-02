@@ -5,9 +5,11 @@ import { getOrders } from "../Utilities";
 
 interface IProps {
   customerId: string;
+  customerName: string;
 }
 
 interface IState {
+    cxName: string,
     cxId: string,
     orders: Array<Order>
 }
@@ -16,6 +18,7 @@ export default class Orders extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
+        cxName: this.props.customerName,
         cxId: this.props.customerId,
         orders: []
     }
@@ -36,36 +39,38 @@ export default class Orders extends React.Component<IProps, IState> {
   render() {
     return (
       <div >
-        <Table responsive variant="dark">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Time</th>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
-                </tr>
-            </thead>
-            <tbody>
-            {
-              this.state.orders.length == 0 ?
-                <h1>No Orders found for customer {this.state.cxId}</h1>
-                :
-                this.state.orders.map((el, index) => 
-                (
-                    <tr>
-                        <td>{index+1}</td>
-                        <td>{this.getDate(new Date(el.timestamp!))}</td>
-                        <td>{el.product}</td>
-                        <td>{el.price}</td>
-                        <td>{el.quantity}</td>
-                        <td>{(el.price as number)*(el.quantity as number)}</td>
-                    </tr>
-                ))
-            }
-            </tbody>
-        </Table>
+      {
+          this.state.orders.length === 0 ?
+          <h3 style={{alignSelf: "center"}}>No Orders found for customer {this.state.cxName}</h3>
+          :
+          <Table responsive variant="dark">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Time</th>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th>Total Price</th>
+                  </tr>
+              </thead>
+              <tbody>
+              {
+                  this.state.orders.map((el, index) => 
+                  (
+                      <tr>
+                          <td>{index+1}</td>
+                          <td>{this.getDate(new Date(el.timestamp!))}</td>
+                          <td>{el.product}</td>
+                          <td>{el.price}</td>
+                          <td>{el.quantity}</td>
+                          <td>{(el.price as number)*(el.quantity as number)}</td>
+                      </tr>
+                  ))
+              }
+              </tbody>
+          </Table>
+      }
       </div>
     );
   }

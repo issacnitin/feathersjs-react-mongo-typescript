@@ -11,10 +11,6 @@ interface IState {
 }
 
 export default class Header extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props)
-    }
-
     render() {
         return (
             <Navbar bg="dark" variant="dark" sticky="top" expand="lg">

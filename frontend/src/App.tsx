@@ -18,6 +18,7 @@ interface IProps {
 interface IState {
   page: Page;
   cxId: string;
+  cxName: string;
 }
 
 export default class App extends React.Component<IProps, IState> {
@@ -25,7 +26,8 @@ export default class App extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       page: Page.CUSTOMERS,
-      cxId: ""
+      cxId: "",
+      cxName: ""
     }
   }
 
@@ -35,10 +37,11 @@ export default class App extends React.Component<IProps, IState> {
     });
   }
 
-  setCustomer = (cx: string) => {
+  setCustomer = (cx: string, cxName: string) => {
     this.setState({
       page: Page.ORDERS,
-      cxId: cx
+      cxId: cx,
+      cxName: cxName
     });
   }
 
@@ -55,7 +58,7 @@ export default class App extends React.Component<IProps, IState> {
         jsx = <Customers setCustomer={this.setCustomer} />;
         break;
       case Page.ORDERS:
-        jsx = <Orders customerId={this.state.cxId}/>;
+        jsx = <Orders customerName={this.state.cxName} customerId={this.state.cxId}/>;
         break;
       case Page.ANALYICS:
         jsx = <Analytics />;

@@ -1,7 +1,7 @@
 var axios = require('axios');
 
-var numCustomers = 10;
-var numOrdersPerCustomer = 10;
+var numCustomers = 100;
+var numOrdersPerCustomer = 1000;
 
 function randomStr(len, arr) { 
     var ans = ''; 

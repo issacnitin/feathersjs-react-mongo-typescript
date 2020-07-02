@@ -4,7 +4,7 @@ import { Customer } from "../Models/Customers";
 import { ListGroup } from "react-bootstrap";
 
 interface IProps {
-    setCustomer: (cx: string) => void
+    setCustomer: (cx: string, cxName: string) => void
 }
 
 interface IState {
@@ -32,8 +32,8 @@ export default class Customers extends React.Component<IProps, IState> {
   }
 
   onCustomerClick = (index: number) => {
-    if(index == -1) {
-      this.props.setCustomer("sampleid");
+    if(index === -1) {
+      this.props.setCustomer("sampleid", "samplename");
       return;
     }
     if(!this.state.customers[index]._id) {
@@ -43,15 +43,15 @@ export default class Customers extends React.Component<IProps, IState> {
       });
       return;
     }
-    this.props.setCustomer(this.state.customers[index]._id as string);
-  }
+    this.props.setCustomer(this.state.customers[index]._id as string, this.state.customers[index].firstName + " " + this.state.customers[index].lastName);
+  } 
 
   render() {
     return (
       <ListGroup>
           {
-            this.state.customers.length == 0 ?
-              <h1>No customers found</h1>
+            this.state.customers.length === 0 ?
+              <h3 style={{alignSelf: "center"}}>No customers found</h3>
               :
               this.state.customers.map((cx, index) => (
                   <ListGroup.Item action key={index} variant={(index%2 === 0) ? "light":"dark"} onClick={this.onCustomerClick.bind(this, index)}>{cx.firstName} {cx.lastName}</ListGroup.Item>

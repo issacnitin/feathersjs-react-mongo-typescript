@@ -31,27 +31,32 @@ export default class Analytics extends React.Component<IProps, IState> {
   render() {
     return (
       <div >
-        <Table responsive variant="dark">
-            <thead>
-                <tr>
-                    <th>Day #</th>
-                    <th>Orders</th>
-                    <th>Total Price</th>
-                </tr>
-            </thead>
-            <tbody>
-            {
-                this.state.data.map((el, index) => 
-                (
-                    <tr>
-                        <td>{el.day}</td>
-                        <td>{el.count}</td>
-                        <td>{el.sum}</td>
-                    </tr>
-                ))
-            }
-            </tbody>
-        </Table>
+        {
+        this.state.data.length === 0 ?
+          <h3 style={{alignSelf: "center"}}>No Analytics found</h3>
+            :
+          <Table responsive variant="dark">
+              <thead>
+                  <tr>
+                      <th>Day #</th>
+                      <th>Orders</th>
+                      <th>Total Price</th>
+                  </tr>
+              </thead>
+                <tbody>
+                {
+                    this.state.data.map((el, index) => 
+                    (
+                        <tr>
+                            <td>{el.day}</td>
+                            <td>{el.count}</td>
+                            <td>{el.sum}</td>
+                        </tr>
+                    ))
+                }
+                </tbody>
+          </Table>
+        }
       </div>
     );
   }

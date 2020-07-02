@@ -18,7 +18,7 @@ export async function getCustomers(): Promise<Array<Customer>> {
 }
 
 export async function getOrders(cxId: string): Promise<Array<Order>> {
-    return await _call('GET', 'orders/' + cxId);
+    return await _call('GET', 'orders?customerId=' + cxId);
 }
 
 export async function getAnalytics(): Promise<Array<AnalyticsData>> {
