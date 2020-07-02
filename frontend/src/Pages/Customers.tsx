@@ -68,17 +68,19 @@ export default class Customers extends React.Component<IProps, IState> {
                   <tr>
                       <th>#</th>
                       <th>Name</th>
+                      <th>Email</th>
                       <th></th>
                   </tr>
                 </thead>
                   {
                     this.state.customers.length === 0 ?
-                      <h3 style={{alignSelf: "center"}}>No customers found</h3>
+                      <p style={{alignSelf: "center"}}>No customers found</p>
                       :
                       this.state.customers.map((cx, index) => (
                         <tr key={index}>
                           <td>{index+1 + (this.state.page-1)*25}</td>
                           <td>{cx.firstName} {cx.lastName}</td>
+                          <td>{cx.email}</td>
                           <td><Button className="Button" onClick={this.onCustomerClick.bind(this, index)}>View Orders</Button></td>
                         </tr>
                       ))

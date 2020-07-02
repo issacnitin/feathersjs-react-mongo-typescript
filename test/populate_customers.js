@@ -1,6 +1,6 @@
 var axios = require('axios');
 
-var numCustomers = 10000;
+var numCustomers = 100;
 
 function randomStr(len, arr) { 
     var ans = ''; 
@@ -19,7 +19,7 @@ while(customerCount < numCustomers) {
         lastName: randomStr((Math.random()*100)%10, 'abcdeafnomgpoeripowaaskjdnasjkdnaskpalsdpoakjiwa'),
         email: randomStr((Math.random()*100)%10, 'abcdeafnomgpoeripowaaskjdnasjkdnaskpalsdpoakjiwa')+"@gmail.com"
     };
-    axios.post('http://localhost:3030/customers', data)
+    axios.post('http://localhost:8000/_api/customers', data)
     .then((res) => {
         console.log(`Status: ${res.status}`);
         console.log('Body: ', res.data);

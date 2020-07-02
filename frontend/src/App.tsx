@@ -70,7 +70,7 @@ export default class App extends React.Component<IProps, IState> {
     return (
       <div className="App">
         <Header setAnalytics={this.setAnalytics} setHome={this.setHome}/>
-        <div className="AppInner">
+        <div style={{width:"80%", padding: "20px", marginLeft: "auto", marginRight: "auto"}}>
           {jsx}
         </div>
       </div>
