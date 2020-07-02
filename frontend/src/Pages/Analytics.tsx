@@ -42,6 +42,9 @@ export default class Analytics extends React.Component<IProps, IState> {
                 </thead>
                   <tbody>
                   {
+                    this.state.data.length === 0 ?
+                      <p style={{alignSelf: "center"}}>No analytics found</p>
+                      :
                       this.state.data.map((el, index) => 
                       (
                           <tr>
