@@ -1,6 +1,6 @@
 var axios = require('axios');
 
-var numCustomers = 100;
+var numCustomers = 1000;
 
 function randomStr(len, arr) { 
     var ans = ''; 
@@ -12,8 +12,7 @@ function randomStr(len, arr) {
 } 
 
 var customerCount = 0;
-var promiseCount = 0;
-while(customerCount < numCustomers) {
+function a(promiseCount) {
     const data = {
         firstName: randomStr((Math.random()*100)%10, 'abcdeafnomgpoeripowaaskjdnasjkdnaskpalsdpoakjiwa'),
         lastName: randomStr((Math.random()*100)%10, 'abcdeafnomgpoeripowaaskjdnasjkdnaskpalsdpoakjiwa'),
@@ -24,21 +23,18 @@ while(customerCount < numCustomers) {
         console.log(`Status: ${res.status}`);
         console.log('Body: ', res.data);
         promiseCount++;
-        if(promiseCount == numCustomers-100) {
-            b();
+        if(promiseCount <= numCustomers) {
+            a(promiseCount + 1);
         }
     })
     .catch((err) => {
         console.log(err);
         promiseCount++;
-        if(promiseCount == numCustomers-100) {
-            b();
+        if(promiseCount <= numCustomers) {
+            a(promiseCount + 1);
         }
     })
     customerCount++;
 }
 
-
-function b() {
-    console.log("done");
-}
+a(0)

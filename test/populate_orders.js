@@ -8,9 +8,9 @@ function randomStr(len, arr) {
     } 
     return ans; 
 } 
-var numOrdersPerCustomer = 20;
+var numOrdersPerCustomer = 153;
 
-axios.get('http://localhost:8000/_api/customers?limit=50&skip=5')
+axios.get('http://localhost:8000/_api/customers?limit=87678697879')
 .then((customers) => {
     customers = customers.data.data
     var promiseCount = 0;
@@ -23,7 +23,6 @@ axios.get('http://localhost:8000/_api/customers?limit=50&skip=5')
 function a(customers, i, orderi) {
     if(i == customers.length && orderi == numOrdersPerCustomer) return;
     var orderCount = 0;
-    while(orderCount < numOrdersPerCustomer) {
         const data = {
             customer: customers[i]._id, //randomStr((Math.random()*100)%10, 'abcdeafnomgpoeripowaaskjdnasjkdnaskpalsdpoakjiwa'),
             product: randomStr((Math.random()*100)%10, 'abcdeafnomgpoeripowaaskjdnasjkdnaskpalsdpoakjiwa'),
@@ -32,8 +31,8 @@ function a(customers, i, orderi) {
         };
         axios.post('http://localhost:8000/_api/orders', data)
         .then((res) => {
-            console.log(`Status: ${res.status}`);
-            console.log('Body: ', res.data);
+            // console.log(`Status: ${res.status}`);
+            // console.log('Body: ', res.data);
             if(orderi == numOrdersPerCustomer)
                 a(customers, i+1, 0)
             else
@@ -47,5 +46,4 @@ function a(customers, i, orderi) {
                 a(customers, i, orderi+1)
         })
         orderCount++;
-    }
 }
