@@ -21,7 +21,12 @@ export class OrderService extends Service {
     if(!!params!.query!.customerId) {
       query.customer = params!.query!.customerId;
     }  
-    return await this.Model.find(query, options).toArray();
+    let data = await this.Model.find(query, options).toArray();
+    let count = Math.ceil((await this.Model.find(query).count())/options.limit);
+    return {
+      data: data,
+      maxPage: count
+    }
   }
 
   async remove(id: NullableId, params?: Params): Promise<any> {

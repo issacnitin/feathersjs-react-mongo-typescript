@@ -2,6 +2,7 @@ import * as React from "react";
 import { Table } from "react-bootstrap";
 import { Order } from "../Models/Order";
 import { getOrders } from "../Utilities";
+import PaginationX from "../Components/Pagination";
 
 interface IProps {
   customerId: string;
@@ -12,7 +13,9 @@ interface IState {
     cxName: string,
     cxId: string,
     orders: Array<Order>,
-    loading: boolean
+    loading: boolean,
+    page: number,
+    maxPage: number
 }
 
 export default class Orders extends React.Component<IProps, IState> {
@@ -22,21 +25,32 @@ export default class Orders extends React.Component<IProps, IState> {
         cxName: this.props.customerName,
         cxId: this.props.customerId,
         orders: [],
-        loading: true
+        loading: true,
+        page: 1,
+        maxPage: 1
     }
-    this.loadOrders();
+    this.loadOrders(1);
   }
 
-  loadOrders = async () => {
-    let orders = await getOrders(this.state.cxId);
+  loadOrders = async (page: number) => {
+    let res = await getOrders(this.state.cxId, page);
+    console.log(res.maxPage)
     this.setState({
-        orders: orders,
+        orders: res.data,
+        page: page,
+        maxPage: res.maxPage,
         loading: false
     });
   }
 
   getDate = (date: Date) => {
     return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+  }
+
+  onPageClick = async (page: number) => {
+    if(page !== this.state.page && page > 0 && page <= this.state.maxPage) {
+      await this.loadOrders(page);
+    }
   }
 
   render() {
@@ -63,7 +77,7 @@ export default class Orders extends React.Component<IProps, IState> {
                         this.state.orders.map((el, index) => 
                         (
                             <tr>
-                                <td>{index+1}</td>
+                                <td>{index+1+(this.state.page-1)*25}</td>
                                 <td>{this.getDate(new Date(el.timestamp!))}</td>
                                 <td>{el.product}</td>
                                 <td>{el.price}</td>
@@ -75,6 +89,7 @@ export default class Orders extends React.Component<IProps, IState> {
                     </tbody>
                 </Table>
             }
+            <PaginationX onPageClick={this.onPageClick} page={this.state.page} maxPage={this.state.maxPage}/>
             </div>
     }
     return jsx;

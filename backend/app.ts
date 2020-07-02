@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 // Add REST API support
 app.configure(express.rest());
-app.use(cors());
+//app.use(cors());
 // Express middleware with a nicer error handler
 app.use(express.errorHandler());
 Services.register(app);

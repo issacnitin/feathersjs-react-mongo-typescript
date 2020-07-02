@@ -8,14 +8,16 @@ interface IProps {
 }
 
 interface IState {
-    data: Array<AnalyticsData>
+    data: Array<AnalyticsData>;
+    loading: boolean;
 }
 
 export default class Analytics extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-        data: []
+        data: [],
+        loading: true
     }
     this.loadOrders();
   }
@@ -24,38 +26,40 @@ export default class Analytics extends React.Component<IProps, IState> {
     let data : Array<AnalyticsData> = await getAnalytics();
     data.sort((a, b) => {return a.day! - b.day!})
     this.setState({
-        data: data
+        data: data,
+        loading: false
     });
   }
 
   render() {
+    let jsx = <Table responsive variant="dark">
+                <thead>
+                    <tr>
+                        <th>Day #</th>
+                        <th>Orders</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                  <tbody>
+                  {
+                      this.state.data.map((el, index) => 
+                      (
+                          <tr>
+                              <td>{el.day}</td>
+                              <td>{el.count}</td>
+                              <td>{el.sum}</td>
+                          </tr>
+                      ))
+                  }
+                  </tbody>
+            </Table>
     return (
       <div >
         {
-        this.state.data.length === 0 ?
-          <h3 style={{alignSelf: "center"}}>No Analytics found</h3>
+          this.state.loading ? 
+            <p>Loading...</p>
             :
-          <Table responsive variant="dark">
-              <thead>
-                  <tr>
-                      <th>Day #</th>
-                      <th>Orders</th>
-                      <th>Total Price</th>
-                  </tr>
-              </thead>
-                <tbody>
-                {
-                    this.state.data.map((el, index) => 
-                    (
-                        <tr>
-                            <td>{el.day}</td>
-                            <td>{el.count}</td>
-                            <td>{el.sum}</td>
-                        </tr>
-                    ))
-                }
-                </tbody>
-          </Table>
+            jsx
         }
       </div>
     );

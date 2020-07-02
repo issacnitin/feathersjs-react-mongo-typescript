@@ -24,8 +24,6 @@ services:
       - APP_MONGO_DB=torre
     logging:
       driver: "none"
-    ports:
-      - "27017:27017"
   nginx: 
     image: nginx:latest
     container_name: dev_nginx

@@ -12,7 +12,12 @@ export class CustomerService extends Service {
       limit: Number(params!.query!.limit),
       skip: Number(params!.query!.limit) * Number(params!.query!.page)
     }
-    return await this.Model.find({}, options).toArray();
+    let data = await this.Model.find({}, options).toArray();
+    let count = Math.ceil((await this.Model.count())/options.limit);
+    return {
+      data: data,
+      maxPage: count
+    }
   }
 
   async get(id: Id, params?: Params): Promise<any> {

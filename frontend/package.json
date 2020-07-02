@@ -6,7 +6,8 @@
     "bootstrap": "^4.5.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-ultimate-pagination": "^1.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -16,6 +17,7 @@
     "@types/node": "^12.12.47",
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
+    "@types/react-ultimate-pagination": "^1.2.0",
     "react-scripts": "3.4.1",
     "typescript": "^3.7.5"
   },
