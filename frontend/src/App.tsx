@@ -3,6 +3,7 @@ import Customers from "./Pages/Customers";
 import Orders from "./Pages/Orders";
 import Analytics from "./Pages/Analytics";
 import './App.css';
+import Header from "./Header";
 
 enum Page{
   CUSTOMERS,
@@ -28,10 +29,22 @@ export default class App extends React.Component<IProps, IState> {
     }
   }
 
+  setHome = () => {
+    this.setState({
+      page: Page.CUSTOMERS
+    });
+  }
+
   setCustomer = (cx: string) => {
     this.setState({
       page: Page.ORDERS,
       cxId: cx
+    });
+  }
+
+  setAnalytics = () => {
+    this.setState({
+      page: Page.ANALYICS
     });
   }
 
@@ -53,6 +66,7 @@ export default class App extends React.Component<IProps, IState> {
     }
     return (
       <div className="App">
+        <Header setAnalytics={this.setAnalytics} setHome={this.setHome}/>
         <div className="AppInner">
           {jsx}
         </div>

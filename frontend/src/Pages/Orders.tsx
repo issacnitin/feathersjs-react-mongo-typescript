@@ -23,10 +23,14 @@ export default class Orders extends React.Component<IProps, IState> {
   }
 
   loadOrders = async () => {
-    let orders = await getOrders();
+    let orders = await getOrders(this.state.cxId);
     this.setState({
         orders: orders
     });
+  }
+
+  getDate = (date: Date) => {
+    return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
   }
 
   render() {
@@ -45,11 +49,14 @@ export default class Orders extends React.Component<IProps, IState> {
             </thead>
             <tbody>
             {
+              this.state.orders.length == 0 ?
+                <h1>No Orders found for customer {this.state.cxId}</h1>
+                :
                 this.state.orders.map((el, index) => 
                 (
                     <tr>
                         <td>{index+1}</td>
-                        <td>{el.timestamp?.getDate()}</td>
+                        <td>{this.getDate(new Date(el.timestamp!))}</td>
                         <td>{el.product}</td>
                         <td>{el.price}</td>
                         <td>{el.quantity}</td>

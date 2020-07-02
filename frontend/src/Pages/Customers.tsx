@@ -48,14 +48,16 @@ export default class Customers extends React.Component<IProps, IState> {
 
   render() {
     return (
-        <ListGroup>
-            <ListGroup.Item action variant={"light"}  onClick={this.onCustomerClick.bind(this, -1)}>asd</ListGroup.Item>
-            {
-            this.state.customers.map((cx, index) => (
-                <ListGroup.Item action key={index} variant={(index%2 === 0) ? "light":"dark"} onClick={this.onCustomerClick.bind(this, index)}>{cx.firstName} {cx.lastName}</ListGroup.Item>
-            ))
-            }
-        </ListGroup>    
+      <ListGroup>
+          {
+            this.state.customers.length == 0 ?
+              <h1>No customers found</h1>
+              :
+              this.state.customers.map((cx, index) => (
+                  <ListGroup.Item action key={index} variant={(index%2 === 0) ? "light":"dark"} onClick={this.onCustomerClick.bind(this, index)}>{cx.firstName} {cx.lastName}</ListGroup.Item>
+              ))
+          }
+      </ListGroup>
     );
   }
 }
