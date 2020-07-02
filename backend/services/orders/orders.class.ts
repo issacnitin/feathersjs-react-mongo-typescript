@@ -1,6 +1,5 @@
 import {Service, MongoDBServiceOptions} from 'feathers-mongodb';
 import { Params, Id, NullableId } from '@feathersjs/feathers';
-import { Order } from './orders.model';
 
 export class OrderService extends Service {
   constructor(config?: Partial<MongoDBServiceOptions>) {
@@ -12,13 +11,17 @@ export class OrderService extends Service {
     return false;
   }
 
-  async find(params?: Params): Promise<any> {
-    if(!!params && !!params.query && !!params.query.customerId) {
-      return await this.Model.find({
-        customer: params!.query!.customerId
-      }).toArray();
+  async find(params: Params): Promise<any> {
+    let options = {
+      limit: Number(params!.query!.limit),
+      skip: Number(params!.query!.limit) * Number(params!.query!.page)
     }
-    return await super.find(params);
+    let query: any = {}
+
+    if(!!params!.query!.customerId) {
+      query.customer = params!.query!.customerId;
+    }  
+    return await this.Model.find(query, options).toArray();
   }
 
   async remove(id: NullableId, params?: Params): Promise<any> {

@@ -1,7 +1,7 @@
 var axios = require('axios');
 
 var numCustomers = 100;
-var numOrdersPerCustomer = 1000;
+var numOrdersPerCustomer = 10;
 
 function randomStr(len, arr) { 
     var ans = ''; 
@@ -20,7 +20,7 @@ while(customerCount < numCustomers) {
         lastName: randomStr((Math.random()*100)%10, 'abcdeafnomgpoeripowaaskjdnasjkdnaskpalsdpoakjiwa'),
         email: randomStr((Math.random()*100)%10, 'abcdeafnomgpoeripowaaskjdnasjkdnaskpalsdpoakjiwa')+"@gmail.com"
     };
-    axios.post('http://localhost:8000/_api/customers', data)
+    axios.post('http://localhost:3030/customers', data)
     .then((res) => {
         console.log(`Status: ${res.status}`);
         console.log('Body: ', res.data);
@@ -41,7 +41,7 @@ while(customerCount < numCustomers) {
 
 
 function b() {
-    axios.get('http://localhost:8000/_api/customers')
+    axios.get('http://localhost:3030/customers')
     .then((customers) => {
         customers = customers.data
         console.log(customers)
@@ -55,7 +55,7 @@ function b() {
                     price: Math.random()*100,
                     quantity: Math.random()*100
                 };
-                axios.post('http://localhost:8000/_api/orders', data)
+                axios.post('http://localhost:3030/orders', data)
                 .then((res) => {
                     console.log(`Status: ${res.status}`);
                     console.log('Body: ', res.data);

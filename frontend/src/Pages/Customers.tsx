@@ -11,6 +11,7 @@ interface IState {
   customers: Array<Customer>;
   error: boolean;
   errorMessage: string;
+  loading: boolean;
 }
 
 export default class Customers extends React.Component<IProps, IState> {
@@ -19,7 +20,8 @@ export default class Customers extends React.Component<IProps, IState> {
     this.state = {
       customers: [],
       error: false,
-      errorMessage: ""
+      errorMessage: "",
+      loading: true
     }
     this.loadCustomers();
   }
@@ -27,15 +29,12 @@ export default class Customers extends React.Component<IProps, IState> {
   loadCustomers = async () => {
     let customers = await getCustomers();
     this.setState({
-      customers: customers
+      customers: customers,
+      loading: false
     });
   }
 
   onCustomerClick = (index: number) => {
-    if(index === -1) {
-      this.props.setCustomer("sampleid", "samplename");
-      return;
-    }
     if(!this.state.customers[index]._id) {
       this.setState({
         error: true,
@@ -47,17 +46,22 @@ export default class Customers extends React.Component<IProps, IState> {
   } 
 
   render() {
-    return (
-      <ListGroup>
-          {
-            this.state.customers.length === 0 ?
-              <h3 style={{alignSelf: "center"}}>No customers found</h3>
-              :
-              this.state.customers.map((cx, index) => (
-                  <ListGroup.Item action key={index} variant={(index%2 === 0) ? "light":"dark"} onClick={this.onCustomerClick.bind(this, index)}>{cx.firstName} {cx.lastName}</ListGroup.Item>
-              ))
-          }
-      </ListGroup>
-    );
+    let jsx = <div>Loading...</div>
+    if(!this.state.loading) {
+      jsx = <ListGroup>
+                  {
+                    this.state.customers.length === 0 ?
+                      <h3 style={{alignSelf: "center"}}>No customers found</h3>
+                      :
+                      this.state.customers.map((cx, index) => (
+                        <div>
+                          <ListGroup.Item action style={{margin: "5px"}} key={index} variant={(index%2 === 0) ? "light":"dark"} onClick={this.onCustomerClick.bind(this, index)}>{cx.firstName} {cx.lastName}</ListGroup.Item>
+                        </div>
+                      ))
+                  }
+              </ListGroup>;
+    }
+    
+    return jsx;
   }
 }

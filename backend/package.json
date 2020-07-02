@@ -12,10 +12,12 @@
   "dependencies": {
     "@feathersjs/express": "^4.5.4",
     "@feathersjs/feathers": "^4.5.3",
+    "cors": "^2.8.5",
     "feathers-mongodb": "^6.1.0",
     "mongodb": "^3.5.9"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.6",
     "@types/mongodb": "^3.5.25",
     "typescript": "^3.9.5"
   }

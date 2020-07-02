@@ -5,7 +5,7 @@ import { AnalyticsData } from "./Models/Analytics";
 async function _call(method: string, url: string, body?: any): Promise<any> {
     return new Promise((resolve, reject) => {
         var req = new XMLHttpRequest();
-        req.open(method, 'http://localhost:8000/_api/' + url);
+        req.open(method, 'http://localhost:3030/' + url);
         req.onload = function(this) {
             resolve(JSON.parse(this.response))
         }

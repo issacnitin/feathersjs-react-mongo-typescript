@@ -6,11 +6,19 @@ export class CustomerService extends Service {
   constructor(config?: Partial<MongoDBServiceOptions>) {
     super(config);
   }
-  
-  async get(id: Id, params: Params): Promise<any> {
+
+  async find(params: Params): Promise<any> {
+    let options = {
+      limit: Number(params!.query!.limit),
+      skip: Number(params!.query!.limit) * Number(params!.query!.page)
+    }
+    return await this.Model.find({}, options).toArray();
+  }
+
+  async get(id: Id, params?: Params): Promise<any> {
     try {
       let customer = await super.get(id);
-      customer.orders = params.data;
+      customer.orders = params!.data;
       return customer;
     } catch (err) {
       return err;

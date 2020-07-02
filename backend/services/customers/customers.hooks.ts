@@ -5,6 +5,22 @@ import { Customer } from "./customers.model";
 export function customersHooks(app: express.Application) {
     app.service('customers').hooks({
         before: {
+            find: [
+                async (context: HookContext) => {
+                    if(!context.params) {
+                        context.params = {};
+                    }
+                    if(!context.params.query) {
+                        context.params.query = {};
+                    }
+                    if(!context.params.query.limit || isNaN(context.params.query.limit)) {
+                        context.params.query.limit = 25;
+                    }
+                    if(!context.params.query.page || isNaN(context.params.query.page)) {
+                        context.params.query.page = 0;
+                    }
+                }
+            ],
             create: [
                 async (context: HookContext) => {
                     let cx = new Customer(context.data);
@@ -26,9 +42,13 @@ export function customersHooks(app: express.Application) {
                         return order._id;
                     })
 
-                    context.params = {
-                        data: orders
-                    };
+                    if(!context.params) {
+                        context.params = {
+                            data: orders
+                        };
+                    } else {
+                        context.params.data = orders;
+                    }
                 }
             ],
             patch: [

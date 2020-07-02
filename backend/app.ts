@@ -1,6 +1,7 @@
 import feathers from '@feathersjs/feathers';
 import express from '@feathersjs/express';
 import * as Services from './services/index';
+import cors from "cors";
 
 // Creates an ExpressJS compatible Feathers application
 const app = express(feathers());
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 // Add REST API support
 app.configure(express.rest());
+app.use(cors());
 // Express middleware with a nicer error handler
 app.use(express.errorHandler());
 Services.register(app);
